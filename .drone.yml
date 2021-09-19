@@ -22,9 +22,9 @@ steps:
 - name: build docker image
   image: plugins/docker
   enviroment: 
-    NEXT_PUBLIC_SUPABASE_URL:
+    SUPABASE_URL:
       from_secret: NEXT_PUBLIC_SUPABASE_URL   
-    NEXT_PUBLIC_SUPABASE_ANON_KEY:
+    SUPABASE_ANON_KEY:
       from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY 
   settings:
     username:
