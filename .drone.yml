@@ -1,0 +1,28 @@
+kind: pipeline
+name: default
+
+steps:
+- name: verify & build
+  image: node
+  commands:
+  - npm install
+  - npm run build
+  when:
+    branch:
+      exclude:
+      - main
+- name: build docker image
+  image: plugins/docker
+  enviroment: 
+    NEXT_PUBLIC_SUPABASE_URL:
+      from_secret: NEXT_PUBLIC_SUPABASE_URL   
+    NEXT_PUBLIC_SUPABASE_ANON_KEY:
+      from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY 
+  settings:
+    username:
+      from_secret: docker_user
+    password:
+      from_secret: docker_token
+    repo: xanya/week6
+    tags:
+      - ${DRONE_COMMIT:0:7}
