@@ -10,7 +10,7 @@ steps:
     NEXT_PUBLIC_SUPABASE_ANON_KEY:
       from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY 
   commands:
-    - cd supabase-tasks
+    - cd supabase-nextjs
     - echo "NEXT_PUBLIC_SUPABASE_URL=$${SUPABASE_URL}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=$${SUPABASE_ANON_KEY}" > .env.local
     - npm install
     - npm run build
