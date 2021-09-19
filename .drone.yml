@@ -4,15 +4,14 @@ name: default
 steps:
 - name: verify & build
   image: node
-  enviroment: 
-    NEXT_PUBLIC_SUPABASE_URL:
-      from_secret: NEXT_PUBLIC_SUPABASE_URL   
-    NEXT_PUBLIC_SUPABASE_ANON_KEY:
-      from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY 
+  environment:
+    SUPABASE_URL:
+      from_secret: NEXT_PUBLIC_SUPABASE_URL
+    SUPABASE_ANON_KEY:
+      from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
   commands:
-    - echo "NEXT_PUBLIC_SUPABASE_URL=$${NEXT_PUBLIC_SUPABASE_URL}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=$${NEXT_PUBLIC_SUPABASE_ANON_KEY}" >> .env.local
-    - echo $NEXT_PUBLIC_SUPABASE_URL
-    - cat .env.local
+    - echo "NEXT_PUBLIC_SUPABASE_URL=$${SUPABASE_URL}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=$${SUPABASE_ANON_KEY}" > .env.local
+    - yarn install
     - npm install
     - npm run build
   when:
@@ -34,8 +33,8 @@ steps:
     password:
       from_secret: docker_token
     build_args_from_env:
-      - NEXT_PUBLIC_SUPABASE_URL
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY 
+        - SUPABASE_URL
+        - SUPABASE_ANON_KEY 
     repo: xanya/week6
     tags:
       - ${DRONE_COMMIT:0:7}
