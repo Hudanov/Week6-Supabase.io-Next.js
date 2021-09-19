@@ -10,12 +10,16 @@ steps:
     NEXT_PUBLIC_SUPABASE_ANON_KEY:
       from_secret: NEXT_PUBLIC_SUPABASE_ANON_KEY 
   commands:
-  - npm install
-  - npm run build
+    - cd supabase-tasks
+    - echo "NEXT_PUBLIC_SUPABASE_URL=$${SUPABASE_URL}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=$${SUPABASE_ANON_KEY}" > .env.local
+    - npm install
+    - npm run build
   when:
     branch:
       exclude:
-      - main
+        - main
+
+
 - name: build docker image
   image: plugins/docker
   enviroment: 
@@ -28,6 +32,9 @@ steps:
       from_secret: docker_user
     password:
       from_secret: docker_token
+    build_args_from_env:
+      - SUPABASE_URL
+      - SUPABASE_ANON_KEY
     repo: xanya/week6
     tags:
       - ${DRONE_COMMIT:0:7}
