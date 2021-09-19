@@ -6,6 +6,9 @@ RUN npm install
 FROM node:lts as builder
 WORKDIR /app
 COPY . .
+ARG SUPABASE_URL=${SUPABASE_URL}
+ARG SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+RUN echo "NEXT_PUBLIC_SUPABASE_URL=$SUPABASE_URL\nNEXT_PUBLIC_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" > .env.local
 COPY --from=dependencies /app/node_modules ./node_modules
 RUN npm run build
 
